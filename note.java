@@ -1,68 +1,70 @@
 import java.util.ArrayList;
 import java.io.*;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.SAXParser;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
-class note {
+class note extends XMLCalls {
 
-    String fileName = "javaNotes.txt";
+    String fileName = "notes.xml";
     ArrayList<String> params = new ArrayList<String>();
 
-    public note(String[] arguments) {
-	
+    public note(String[] arguments) {	
 	// Store user options
 	for(String param: arguments) {
 	    params.add(param);
-	}
+	}		
+    }
+
+
+    public void write(String title, String content) {	
 	
     }
 
 
-    public void write(String title, String content) {
-	System.out.println("Calling write()");
-	try {
-	    FileWriter fileWriter = new FileWriter(fileName);
-	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-	    
-	    bufferedWriter.write(title);
-	    bufferedWriter.newLine();
-	    bufferedWriter.write(content);
-	    bufferedWriter.close();
-	} catch(IOException ex) {
-	    System.out.print("Your note could not be written.\nPlease try again.");
-	}
-    }
 
 
-    
+    // ADDING NEW NOTE
     public void add(String title, String content) {
 	String output = String.format("Creating new note called %s:", title);
-	System.out.println(output);
-	write(title, content);
+	this.parseXML(fileName);
     }
     
 
+    // REMOVING CURRENT NOTE
     public void remove(String title) {
 	System.out.println("Removing note:");
     }
     
 
+    // LIST ALL NOTES
     public void list() {
 	System.out.println("Listing all notes:");	
     }
     
 
+    // VIEW SPECIFIC NOTE
     public void view(String title) {
 	System.out.println(String.format("Vewing note %s:", title));
     }
 
+
+    // DISPLAY COMMANDS THAT CAN BE USED
     public void help() {
 	System.out.println("Displaying help:");
     }
     
 
+
+
+
+   
     public static void main(String[] args) {	
 
 	note noteCall = new note(args);
-	
+
 	switch (noteCall.params.get(0)) {
 	case "add":
 	    noteCall.add(noteCall.params.get(1), noteCall.params.get(2));
