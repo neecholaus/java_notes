@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.io.*;
 
 class note {
 
+    String fileName = "javaNotes.txt";
     ArrayList<String> params = new ArrayList<String>();
 
     public note(String[] arguments) {
@@ -14,10 +16,27 @@ class note {
     }
 
 
+    public void write(String title, String content) {
+	System.out.println("Calling write()");
+	try {
+	    FileWriter fileWriter = new FileWriter(fileName);
+	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+	    
+	    bufferedWriter.write(title);
+	    bufferedWriter.newLine();
+	    bufferedWriter.write(content);
+	    bufferedWriter.close();
+	} catch(IOException ex) {
+	    System.out.print("Your note could not be written.\nPlease try again.");
+	}
+    }
+
+
     
     public void add(String title, String content) {
 	String output = String.format("Creating new note called %s:", title);
 	System.out.println(output);
+	write(title, content);
     }
     
 
