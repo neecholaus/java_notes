@@ -17,23 +17,24 @@ import javax.xml.stream.events.XMLEvent;
 class XMLCalls {
 
 
-    public void parseXML(String fileName) {
-	boolean bTitle = false;
-	boolean bContent = false;
+    public void XMLList(String fileName) {
 	try {
 
 	    FileReader file = new FileReader(fileName);
 	    XMLInputFactory factory = XMLInputFactory.newInstance();
 	    XMLEventReader eventReader = factory.createXMLEventReader(file);
-
 	    while(eventReader.hasNext()) {
 		XMLEvent event = eventReader.nextEvent();
-		if(event.getEventType() == XMLStreamConstants.CHARACTERS) {
-		    Characters characters = event.asCharacters();
-		    System.out.println(characters.getData());   
-		} else {
-		    System.out.println("n/a");
-		}	
+		if(event.isStartElement()) {
+		    StartElement el = event.asStartElement();
+		    String elName = el.getName().getLocalPart();
+		    if(elName.toString() == "note"){
+			System.out.println("------------------------------------");
+		    }
+		}
+		if(event.isCharacters() && !event.asCharacters().isWhiteSpace()) {
+		    System.out.println(event.asCharacters().toString().replaceAll("\\n", ""));	
+		}
 	    }
 	    eventReader.close();
 	    
@@ -41,8 +42,8 @@ class XMLCalls {
 	    e.printStackTrace();
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
-	}
-    }
+	}	
+    }    
 
     
     public static void main(String[] args) {

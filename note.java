@@ -1,10 +1,5 @@
 import java.util.ArrayList;
 import java.io.*;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.parsers.SAXParser;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 class note extends XMLCalls {
 
@@ -29,7 +24,6 @@ class note extends XMLCalls {
     // ADDING NEW NOTE
     public void add(String title, String content) {
 	String output = String.format("Creating new note called %s:", title);
-	this.parseXML(fileName);
     }
     
 
@@ -41,7 +35,8 @@ class note extends XMLCalls {
 
     // LIST ALL NOTES
     public void list() {
-	System.out.println("Listing all notes:");	
+	System.out.println("Listing all notes:");
+	this.XMLList(fileName);
     }
     
 
