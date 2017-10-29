@@ -24,6 +24,7 @@ class note extends XMLCalls {
     // ADDING NEW NOTE
     public void add(String title, String content) {
 	String output = String.format("Creating new note called %s:", title);
+	this.XMLAdd(fileName, title, content);
     }
     
 

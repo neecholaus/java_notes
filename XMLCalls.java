@@ -11,12 +11,25 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
 
 
 
 class XMLCalls {
 
 
+    // ADD CALL
+    public void XMLAdd(String fileName, String title, String content) {
+	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	DocumentBuilder db = dbf.newDocumentBuilder();
+	Document doc = db.parse(fileName);
+	
+    }
+
+    
+
+    // LIST CALL
     public void XMLList(String fileName) {
 	try {
 
@@ -28,7 +41,7 @@ class XMLCalls {
 		if(event.isStartElement()) {
 		    StartElement el = event.asStartElement();
 		    String elName = el.getName().getLocalPart();
-		    if(elName.toString() == "note"){
+		    if(elName.toString() == "note") {
 			System.out.println("------------------------------------");
 		    }
 		}
