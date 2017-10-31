@@ -1,7 +1,5 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Iterator;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -11,8 +9,13 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
+import java.util.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+import javax.xml.transform.dom.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+
 
 
 
@@ -21,10 +24,22 @@ class XMLCalls {
 
     // ADD CALL
     public void XMLAdd(String fileName, String title, String content) {
-	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	DocumentBuilder db = dbf.newDocumentBuilder();
-	Document doc = db.parse(fileName);
+	try {
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder db = dbf.newDocumentBuilder();
+	    Document document = db.parse(fileName);
+	    Element root = document.getDocumentElement();
+
+	    Collection<String> notes = new ArrayList<String>();
 	
+	    Element newNote = document.createElement("note");
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (ParserConfigurationException e) {
+	    e.printStackTrace();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 
     
