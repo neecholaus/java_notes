@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.File;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -15,7 +16,15 @@ import javax.xml.transform.stream.*;
 import javax.xml.transform.dom.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 
 
@@ -24,22 +33,39 @@ class XMLCalls {
 
     // ADD CALL
     public void XMLAdd(String fileName, String title, String content) {
-	try {
+        try {
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    DocumentBuilder db = dbf.newDocumentBuilder();
 	    Document document = db.parse(fileName);
 	    Element root = document.getDocumentElement();
-
-	    Collection<String> notes = new ArrayList<String>();
-	
+	    
 	    Element newNote = document.createElement("note");
+	    Element titleEl = document.createElement("title");
+	    titleEl.setTextContent(title);
+	    Element contentEl = document.createElement("content");
+	    contentEl.setTextContent(content);
+
+	    newNote.appendChild(titleEl);
+	    newNote.appendChild(contentEl);
+	    root.appendChild(newNote);
+
+
+	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	    Transformer transformer = transformerFactory.newTransformer();
+	    DOMSource source = new DOMSource(document);
+	    StreamResult result = new StreamResult(new File("notes.xml"));
+
+	    transformer.transform(source, result);
+
+	    
+	    
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	} catch (ParserConfigurationException e) {
 	    e.printStackTrace();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	}
+	} 
     }
 
     
