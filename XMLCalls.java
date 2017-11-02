@@ -40,6 +40,7 @@ class XMLCalls {
 	    Element root = document.getDocumentElement();
 	    
 	    Element newNote = document.createElement("note");
+	    newNote.setAttribute("title", title);
 	    Element titleEl = document.createElement("title");
 	    titleEl.setTextContent(title);
 	    Element contentEl = document.createElement("content");
@@ -68,6 +69,48 @@ class XMLCalls {
 	} 
     }
 
+
+    // REMOVE CALL
+    public void XMLRemove(String fileName, String title) {
+	try {
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder db = dbf.newDocumentBuilder();
+	    Document document = db.parse(fileName);
+
+	    // Get all document
+	    Element allNotes = document.getDocumentElement();
+	    // Get all notes in nodelist
+	    NodeList notes = allNotes.getElementsByTagName("note");
+	    // Loop through all notes
+	    for(int i = 0; i < notes.getLength(); i++) {
+		Node node = notes.item(i);
+		NamedNodeMap attributes = node.getAttributes();
+		// Get current note's attribute(s)
+		for(int j = 0; j < attributes.getLength(); j++) {
+		    Node attr = attributes.item(j);
+		    String attrString = attr.getNodeValue();
+		    // Check if attribute matches given title
+		    if(attrString.equals(title)) {
+			// Remove note if match
+			allNotes.removeChild(node);
+		    }
+		}
+	    }
+
+	    DOMSource source = new DOMSource(document);
+	    StreamResult result = new StreamResult(new File(fileName));
+
+	    Transformer t = TransformerFactory.newInstance().newTransformer();
+	    t.transform(source, result);
+	    
+	} catch(FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch(ParserConfigurationException e) {
+	    e.printStackTrace();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
     
 
     // LIST CALL
