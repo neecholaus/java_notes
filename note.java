@@ -3,6 +3,8 @@ import java.io.*;
 
 class note extends XMLCalls {
 
+    
+    String seperator = "------------------------------------";
     String fileName = "notes.xml";
     ArrayList<String> params = new ArrayList<String>();
 
@@ -23,28 +25,39 @@ class note extends XMLCalls {
 
     // ADDING NEW NOTE
     public void add(String title, String content) {
+	System.out.println(seperator);
 	String output = String.format("Creating new note called %s:", title);
 	this.XMLAdd(fileName, title, content);
+	System.out.println(output);
+	System.out.println(seperator);
     }
     
 
     // REMOVING CURRENT NOTE
     public void remove(String title) {
+	System.out.println(seperator);
 	System.out.println("Removing note:");
 	this.XMLRemove(fileName, title);
+	System.out.println(seperator);
     }
     
 
     // LIST ALL NOTES
     public void list() {
+	System.out.println(seperator);
 	System.out.println("Listing all notes:");
 	this.XMLList(fileName);
+	System.out.println(seperator);
     }
     
 
     // VIEW SPECIFIC NOTE
     public void view(String title) {
+	System.out.println(seperator);
 	System.out.println(String.format("Viewing note %s:", title));
+	System.out.println(seperator);
+	this.XMLView(fileName, title);
+	System.out.println(seperator);
     }
 
 
