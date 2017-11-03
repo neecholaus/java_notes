@@ -95,7 +95,7 @@ class XMLCalls {
 			allNotes.removeChild(node);
 		    }
 		}
-	    }
+	    }   
 
 	    DOMSource source = new DOMSource(document);
 	    StreamResult result = new StreamResult(new File(fileName));
@@ -140,7 +140,45 @@ class XMLCalls {
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	}	
-    }    
+    }
+
+
+    // VIEW CALL
+    public void XMLView(String fileName, String title) {
+	try {
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder db = dbf.newDocumentBuilder();
+	    Document document = db.parse(fileName);
+
+	    Element allNotes = document.getDocumentElement();
+
+	    NodeList notes = allNotes.getElementsByTagName("note");
+	    Boolean found = false;
+	    for(int i = 0; i < notes.getLength(); i++) {
+		Node node = notes.item(i);
+		NamedNodeMap attributes = node.getAttributes();
+		if(attributes.item(0).getNodeValue().equals(title)) {
+		    NodeList children = node.getChildNodes();
+		    for(int j = 0; j < children.getLength(); j++) {			
+			System.out.println(children.item(j).getTextContent());
+		    }
+		    found = true;
+		}
+	    }
+	    if(found != true) {
+		System.out.println("No matches were found.");
+		System.out.println("Please try again.");
+	    }
+	    
+	    
+	} catch(FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch(ParserConfigurationException e) {
+	    e.printStackTrace();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
 
     
     public static void main(String[] args) {
