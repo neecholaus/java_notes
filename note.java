@@ -76,6 +76,8 @@ class note extends XMLCalls {
 	System.out.println("edit ---- Use edit followed by title and content parameters ");
 	System.out.println("          to replace the note with a matching title.");
 	System.out.println("          e.g. java note edit \"title\" \"content string\"");
+	System.out.println("view ---- Use view followed by a title to display a specific note.");
+	System.out.println("          e.g. java note view \"title\"");
     }
     
 
